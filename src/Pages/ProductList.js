@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { getProductsData } from "../store/actions";
+import { getProductsData, addToCart } from "../store/actions";
 
 export default function ProductList() {
   const dispatch = useDispatch();
-  const products = useSelector((store) => store.productsReducer.data);
+  const store = useSelector((store) => store.productsReducer);
 
   useEffect(() => {
     getProductsData().then((result) => {
@@ -13,21 +13,25 @@ export default function ProductList() {
     });
   }, []);
 
+  console.log("store 확인 >>>", store);
+
   return (
     <Container>
       <ContentHeader>상품목록</ContentHeader>
       <Products>
-        {products &&
-          products.map((item) => {
+        {store.products &&
+          store.products.data.map((item, idx) => {
             return (
-              <Prodcut>
+              <Prodcut key={idx}>
                 <img
                   src="http://placehold.it/350x350?text=350x350"
                   alt="상품 썸네일 이미지"
                 />
                 <h5>{item.title}</h5>
                 <p>33,250 원</p>
-                <button>장바구니 담기</button>
+                <button onClick={() => dispatch(addToCart(item))}>
+                  장바구니 담기
+                </button>
               </Prodcut>
             );
           })}
