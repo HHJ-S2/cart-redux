@@ -5,7 +5,7 @@ import { getProductsData, addToCart } from "../store/actions";
 
 export default function ProductList() {
   const dispatch = useDispatch();
-  const store = useSelector((store) => store.productsReducer);
+  const productState = useSelector((store) => store.productsReducer);
 
   useEffect(() => {
     getProductsData().then((result) => {
@@ -13,16 +13,16 @@ export default function ProductList() {
     });
   }, []);
 
-  console.log("store 확인 >>>", store);
+  console.log("store 확인 >>>", productState);
 
   return (
     <Container>
       <ContentHeader>상품목록</ContentHeader>
       <Products>
-        {store.products &&
-          store.products.data.map((item, idx) => {
+        {productState.products &&
+          productState.products.data.map((item, idx) => {
             return (
-              <Prodcut key={idx}>
+              <Prodcut key={item.id}>
                 <img
                   src="http://placehold.it/350x350?text=350x350"
                   alt="상품 썸네일 이미지"
@@ -42,15 +42,10 @@ export default function ProductList() {
 
 const Container = styled.div`
   ${({ theme }) => theme.container}
-  padding-top: 50px;
 `;
 
 const ContentHeader = styled.header`
-  margin: 0 0 30px;
-  padding: 0 0 15px;
-  border-bottom: 2px solid #111;
-  font-size: 30px;
-  font-weight: 600;
+  ${({ theme }) => theme.ContentHeader}
 `;
 
 const Products = styled.ul`

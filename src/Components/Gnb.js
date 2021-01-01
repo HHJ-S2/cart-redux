@@ -11,7 +11,7 @@ const controlActivation = [
 ];
 
 function Gnb() {
-  const products = useSelector((store) => store.productsReducer);
+  const productState = useSelector((store) => store.productsReducer);
 
   return (
     <Nav>
@@ -29,7 +29,7 @@ function Gnb() {
             <li>
               <Link to="/cart">
                 <FontAwesomeIcon icon={faShoppingCart} />
-                <Count>{products.cartItems.length}</Count>
+                <Count>{productState.cartItems.length}</Count>
               </Link>
             </li>
           </Menu>
@@ -38,6 +38,12 @@ function Gnb() {
     </Nav>
   );
 }
+
+const Nav = styled.nav`
+  margin-bottom: 50px;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+`;
 
 const Container = styled.div`
   ${({ theme }) => theme.container};
@@ -50,11 +56,6 @@ const Container = styled.div`
     font-weight: 600;
     color: ${({ theme }) => theme.color.pryColor};
   }
-`;
-
-const Nav = styled.nav`
-  padding: 10px 0;
-  border-bottom: 1px solid #ddd;
 `;
 
 const Wrapper = styled.div`
@@ -89,9 +90,9 @@ const Count = styled.span`
   right: 3px;
   top: 10px;
   display: block;
-  width: 16px;
-  height: 16px;
-  padding-top: 0px;
+  padding-top: 1px;
+  width: 18px;
+  height: 18px;
   background: tomato;
   border-radius: 50%;
   text-align: center;
