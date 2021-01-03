@@ -13,8 +13,6 @@ export default function ProductList() {
     });
   }, []);
 
-  console.log("store 확인 >>>", productState);
-
   return (
     <Container>
       <ContentHeader>상품목록</ContentHeader>

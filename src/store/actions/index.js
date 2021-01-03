@@ -1,6 +1,5 @@
 import axios from "axios";
-const GET_PRODUCTS_DATA = "GET_PRODUCTS_DATA";
-const ADD_CART = "ADD_CART";
+import productType from "../type/productsType";
 
 export const getProductsData = async () => {
   const products = await axios.get(
@@ -8,14 +7,29 @@ export const getProductsData = async () => {
   );
 
   return {
-    type: GET_PRODUCTS_DATA,
+    type: productType.GET_PRODUCTS_DATA,
     payload: products,
   };
 };
 
 export const addToCart = (payload) => {
   return {
-    type: ADD_CART,
+    type: productType.ADD_CART,
     payload,
+  };
+};
+
+export const singleCheck = (id, checked) => {
+  return {
+    type: productType.SINGLE_CHECK,
+    id,
+    checked,
+  };
+};
+
+export const allCheck = (checked) => {
+  return {
+    type: productType.ALL_CHECK,
+    checked,
   };
 };

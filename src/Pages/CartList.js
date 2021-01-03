@@ -1,10 +1,12 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
+import { allCheck, singleCheck } from "../store/actions";
 
 export default function CartList() {
+  const dispatch = useDispatch();
   const productState = useSelector((store) => store.productsReducer);
 
   console.log(productState);
@@ -24,12 +26,23 @@ export default function CartList() {
         </thead>
         <tbody>
           {productState &&
-            productState.cartItems.map((item, idx) => {
+            productState.cartItems.map((item) => {
               return (
                 <tr key={item.id}>
                   <td>
                     <CartCheck>
-                      <input type="checkbox" id={item.id} />
+                      <input
+                        type="checkbox"
+                        id={item.id}
+                        checked={
+                          productState.cartCheckList.includes(item.id)
+                            ? true
+                            : false
+                        }
+                        onChange={(e) => {
+                          dispatch(singleCheck(item.id, e.target.checked));
+                        }}
+                      />
                       <label htmlFor={item.id} />
                     </CartCheck>
                   </td>
@@ -55,7 +68,13 @@ export default function CartList() {
       <PaymentWrap>
         <CheckContents>
           <CartCheck>
-            <input type="checkbox" id="all" />
+            <input
+              type="checkbox"
+              id="all"
+              onChange={(e) => {
+                dispatch(allCheck(e.target.checked));
+              }}
+            />
             <label htmlFor="all" />
           </CartCheck>
           <span>전체선택</span>
