@@ -19,6 +19,13 @@ export const addToCart = (payload) => {
   };
 };
 
+export const deleteCart = (id) => {
+  return {
+    type: productType.DELETE_CART,
+    id,
+  };
+};
+
 export const singleCheck = (id, checked) => {
   return {
     type: productType.SINGLE_CHECK,

@@ -6,7 +6,7 @@ const initialState = {
 };
 
 export default function productReducer(state = initialState, action) {
-  const { payload } = action;
+  const { payload, id, checked } = action;
   const { cartItems, cartCheckList } = state;
 
   switch (action.type) {
@@ -17,13 +17,17 @@ export default function productReducer(state = initialState, action) {
     case productType.ADD_CART:
       return { ...state, cartItems: cartItems.concat(payload) };
 
-    case productType.SINGLE_CHECK:
-      const { id, checked } = action;
+    case productType.DELETE_CART:
+      return {
+        ...state,
+        cartItems: cartItems.filter((item) => item.id !== id),
+      };
 
+    case productType.SINGLE_CHECK:
       if (checked) {
         cartCheckList.push(id);
       } else {
-        state.cartCheckList = cartCheckList.filter((el) => el !== id);
+        state.cartCheckList = cartCheckList.filter((item) => item !== id);
       }
       return { ...state };
 

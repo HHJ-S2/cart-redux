@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
-import { allCheck, singleCheck } from "../store/actions";
+import { deleteCart, allCheck, singleCheck } from "../store/actions";
 
 export default function CartList() {
   const dispatch = useDispatch();
@@ -58,7 +58,13 @@ export default function CartList() {
                   </td>
                   <td>33,250 원</td>
                   <td>
-                    <DefaultBtn>Delete</DefaultBtn>
+                    <DefaultBtn
+                      onClick={() => {
+                        dispatch(deleteCart(item.id));
+                      }}
+                    >
+                      Delete
+                    </DefaultBtn>
                   </td>
                 </tr>
               );
